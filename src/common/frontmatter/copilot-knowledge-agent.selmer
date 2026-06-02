@@ -1,0 +1,7 @@
+name: org-ssdlc-expert
+description: Security in the SDLC expert - guides secure-by-design development and vulnerability management
+mcpServers:
+  - mcp-atlassian
+  - github-mcp-server
+providers:
+  - github

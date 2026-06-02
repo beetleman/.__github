@@ -1,0 +1,13 @@
+---
+name: implementing-api-security-posture-management
+description: Continuously discover, classify, and risk-score APIs across an organization. Enforces security policies, detects shadow APIs and configuration drift, and produces posture dashboards aligned to NIST CSF.
+{% include "src/common/frontmatter/skill-domain.selmer" %}subdomain: api-security
+tags:
+- api-security
+- posture-management
+- api-discovery
+- risk-scoring
+- api-governance
+- continuous-monitoring
+{% include "src/common/frontmatter/skill-version.selmer" %}---
+{% include "src/skills/api-security/implementing-api-security-posture-management.md" %}

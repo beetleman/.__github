@@ -1,0 +1,12 @@
+---
+name: deep-code-review
+description: Deep-dive manual code review for first-party vulnerabilities that SAST tools miss — auth, authz, business logic, data exposure, injection, secrets, and supply-chain attack surface
+{% include "src/common/frontmatter/skill-domain.selmer" %}subdomain: security-review
+tags:
+- manual-review
+- business-logic
+- authorization
+- data-exposure
+- supply-chain
+{% include "src/common/frontmatter/skill-version.selmer" %}---
+{% include "src/instructions/deep_code_review.instructions.md" %}

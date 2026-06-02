@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "./targets.schema.json",
+  "title": "Build targets manifest",
+  "description": "Schema for `scripts/targets.yaml`, which maps logical content entries to one or more rendered output targets.",
+  "type": "object",
+  "minProperties": 1,
+  "examples": [
+    {
+      "agents": {
+        "entries": {
+          "vertex-security-agent": {
+            "targets": {
+              "eca": {
+                "from": "src/eca/agents/vertex-security-agent.md",
+                "to": "eca-plugins/vertex-security/agents/vertex-security-agent.md"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": {
+    "$ref": "#/$defs/group"
+  },
+  "$defs": {
+    "group": {
+      "title": "Target group",
+      "description": "A top-level manifest section such as `agents`, `instructions`, `commands`, or `skills`. Each group contains a named `entries` map.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entries"],
+      "examples": [
+        {
+          "entries": {
+            "vertex-security-agent": {
+              "targets": {
+                "eca": {
+                  "from": "src/eca/agents/vertex-security-agent.md",
+                  "to": "eca-plugins/vertex-security/agents/vertex-security-agent.md"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "entries": {
+          "title": "Entries",
+          "description": "Named manifest entries within the group. Keys are logical entry identifiers and values describe per-entry destination targets.",
+          "type": "object",
+          "minProperties": 1,
+          "examples": [
+            {
+              "vertex-security-agent": {
+                "targets": {
+                  "eca": {
+                    "from": "src/eca/agents/vertex-security-agent.md",
+                    "to": "eca-plugins/vertex-security/agents/vertex-security-agent.md"
+                  }
+                }
+              }
+            }
+          ],
+          "additionalProperties": {
+            "$ref": "#/$defs/entry"
+          }
+        }
+      }
+    },
+    "entry": {
+      "title": "Manifest entry",
+      "description": "A single logical content item. An entry must declare one or more named output `targets`.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targets"],
+      "examples": [
+        {
+          "targets": {
+            "copilot": {
+              "from": "src/copilot/instructions/snyk_rules.instructions.md",
+              "to": "github/snyk_rules.instructions.md"
+            },
+            "eca": {
+              "from": "src/eca/rules/snyk-rules.md",
+              "to": "eca-plugins/vertex-security/rules/snyk-rules.md"
+            }
+          }
+        }
+      ],
+      "properties": {
+        "targets": {
+          "title": "Targets",
+          "description": "One or more named build targets for the entry. Each target describes where content comes from (`from`) and where it should be written (`to`).",
+          "type": "object",
+          "minProperties": 1,
+          "examples": [
+            {
+              "copilot": {
+                "from": "src/copilot/instructions/snyk_rules.instructions.md",
+                "to": "github/snyk_rules.instructions.md"
+              },
+              "eca": {
+                "from": "src/eca/skills/api-security/testing-api-security-with-owasp-top-10.md",
+                "to": "eca-plugins/vertex-security/skills/example/SKILL.md"
+              }
+            }
+          ],
+          "additionalProperties": {
+            "$ref": "#/$defs/target"
+          }
+        }
+      }
+    },
+    "target": {
+      "title": "Output target",
+      "description": "A concrete destination for an entry.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to"],
+      "examples": [
+        {
+          "from": "src/eca/agents/vertex-security-agent.md",
+          "to": "eca-plugins/vertex-security/agents/vertex-security-agent.md"
+        },
+        {
+          "from": "src/eca/skills/security-review/deep-code-review.md",
+          "to": "eca-plugins/vertex-security/skills/example/SKILL.md"
+        }
+      ],
+      "properties": {
+        "from": {
+          "title": "Source file",
+          "description": "Path to the source file copied or transformed for this target. Use this for direct file-backed targets. Processed by Selmer template engine",
+          "type": "string",
+          "minLength": 1,
+          "examples": [
+            "src/eca/agents/vertex-security-agent.md",
+            "src/eca/agents/vertex-security-agent.md",
+            "src/copilot/skills/api-security/testing-api-security-with-owasp-top-10.md"
+          ]
+        },
+        "to": {
+          "title": "Destination path",
+          "description": "Repository-relative output path written by the build process for this target.",
+          "type": "string",
+          "minLength": 1,
+          "examples": [
+            "github/snyk_rules.instructions.md",
+            "eca-plugins/vertex-security/skills/snyk-security-review/SKILL.md"
+          ]
+        }
+      }
+    }
+  }
+}

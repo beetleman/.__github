@@ -1,0 +1,12 @@
+---
+name: testing-api-authentication-weaknesses
+description: Tests API authentication for bypass vulnerabilities — missing auth on endpoints, JWT weaknesses, OAuth flaws, credential stuffing susceptibility, token leakage, and session management gaps. Maps to OWASP API2:2023.
+{% include "src/common/frontmatter/skill-domain.selmer" %}subdomain: api-security
+tags:
+- api-security
+- owasp
+- authentication
+- jwt
+- session-management
+{% include "src/common/frontmatter/skill-version.selmer" %}---
+{% include "src/skills/api-security/testing-api-authentication-weaknesses.md" %}

@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    {
+      "name": "vertex-security",
+      "description": "Vertex Security agents, rules, and skills for ECA.",
+      "source": "eca-plugins/vertex-security"
+    }
+  ]
+}

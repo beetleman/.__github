@@ -1,0 +1,12 @@
+---
+name: conducting-api-security-testing
+description: End-to-end security testing workflow for REST, GraphQL, and gRPC APIs covering authentication, authorization, input validation, rate limiting, and business logic vulnerabilities using the OWASP API Security Top 10 as the testing framework.
+{% include "src/common/frontmatter/skill-domain.selmer" %}subdomain: penetration-testing
+tags:
+- API-security
+- OWASP-API-Top10
+- REST
+- GraphQL
+- authorization-testing
+{% include "src/common/frontmatter/skill-version.selmer" %}---
+{% include "src/skills/api-security/conducting-api-security-testing.md" %}

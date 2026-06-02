@@ -1,0 +1,12 @@
+---
+name: testing-api-for-broken-object-level-authorization
+description: Tests REST and GraphQL APIs for BOLA/IDOR — where authenticated users access or modify resources belonging to other users by manipulating object identifiers. Covers OWASP API1:2023 across all HTTP methods, ID formats, batch endpoints, and GraphQL.
+{% include "src/common/frontmatter/skill-domain.selmer" %}subdomain: api-security
+tags:
+- api-security
+- owasp
+- bola
+- idor
+- authorization
+{% include "src/common/frontmatter/skill-version.selmer" %}---
+{% include "src/skills/api-security/testing-api-for-broken-object-level-authorization.md" %}

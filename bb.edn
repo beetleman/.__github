@@ -1,0 +1,5 @@
+;; Babashka project config. Putting scripts/ on the classpath lets the task
+;; scripts require the shared `common` namespace by its short name, e.g.
+;; (require '[common]). selmer and clj-yaml are built into babashka, so no
+;; extra :deps are needed here.
+{:paths ["scripts"]}

@@ -1,0 +1,2 @@
+name: {{name|yaml-scalar}}
+description: {{description|yaml-scalar}}

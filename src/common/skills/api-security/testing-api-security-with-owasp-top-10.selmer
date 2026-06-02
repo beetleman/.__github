@@ -1,0 +1,12 @@
+---
+name: testing-api-security-with-owasp-top-10
+description: Systematic test procedures for all ten OWASP API Security Top 10 (2023) risks against REST and GraphQL APIs using Burp Suite, ffuf, and curl.
+{% include "src/common/frontmatter/skill-domain.selmer" %}subdomain: web-application-security
+tags:
+- penetration-testing
+- api-security
+- owasp
+- rest-api
+- graphql
+{% include "src/common/frontmatter/skill-version.selmer" %}---
+{% include "src/skills/api-security/testing-api-security-with-owasp-top-10.md" %}

@@ -1,84 +1,96 @@
-# Vertex Security Expert — GitHub Copilot Agent
+# Vertex Security Expert Agent Pack
 
-A unified security agent for GitHub Copilot that combines:
-- **SSDLC Guidance** — reads live from `VertexInc/vertex-knowledge-bases`
-- **API Security Testing** — 7 skills from OWASP API Top 10 (stored locally in `skills/api-security/`)
-- **Snyk Scanning** — SAST + SCA + fix validation
-- **Deep Code Review** — 7-phase manual security review
+A portable security-agent content pack built from one canonical source tree.
 
----
+This repository keeps the durable security knowledge under `src/` and generates harness-specific outputs for supported runtimes:
 
-## Setup (3 steps)
+- `github/` for GitHub Copilot-oriented export artifacts
+- `eca-plugins/vertex-security/` for Editor Code Assistant plugin artifacts
 
-### Step 1 — Copy the agent file
+The goal is to keep the security guidance portable while keeping harness-specific setup thin.
 
-```bash
-mkdir -p ~/.copilot/agents
-cp agents/Vertex-security-agent.agent.md ~/.copilot/agents/
-```
+## What is in this repo
 
-### Step 2 — Set environment variables for API tokens
+- security-review agents
+- SSDLC guidance
+- Snyk review instructions
+- deep manual security-review instructions
+- API-security skills
+- harness-aware source templates and shared fragments that generate harness-specific markdown
 
-**Do not put tokens directly in settings files.** Export them in your shell profile (`~/.zshrc` or `~/.bash_profile`) instead:
+## Source of truth
 
-```bash
-export GITHUB_PERSONAL_ACCESS_TOKEN="ghp_..."   # repo scope
-export SNYK_TOKEN="snyk_..."                     # Snyk API token
-```
+Edit canonical content under `src/`.
 
-Then reload your shell: `source ~/.zshrc`
+Generated outputs under `github/` and `eca-plugins/vertex-security/` are derived from `src/` and committed so they can be consumed directly by supported tools. The `.github/` tree is reserved for workflows and maintenance metadata. The ECA plugin marketplace entry lives in `.eca-plugin/marketplace.json`.
 
-To get your **GitHub token**: GitHub → Settings → Developer Settings → Personal Access Tokens → Generate new token (need `repo` scope).
+All generated artifact families now render from harness-aware source templates under `src/`, with reusable Selmer fragments under `src/common/`.
 
-To get your **Snyk token**: Snyk → Account Settings → API Token.
+For ECA, consumers should point ECA at this repo root as a plugin source and install `vertex-security`. This repo is not consumed by copying generated files into `.eca/`.
 
-### Step 3 — Configure MCP servers in VS Code
+See [`docs/BUILD.md`](docs/BUILD.md) for the generation model and repo layout.
 
-Open VS Code settings (`Cmd+Shift+P` → "Open User Settings JSON") and add:
+## Supported harnesses
 
-```json
-"mcp": {
-  "servers": {
-    "github-mcp-server": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${env:GITHUB_PERSONAL_ACCESS_TOKEN}"
-      }
-    },
-    "snyk": {
-      "command": "npx",
-      "args": ["-y", "snyk-mcp"],
-      "env": {
-        "SNYK_TOKEN": "${env:SNYK_TOKEN}"
-      }
-    }
-  }
-}
-```
+This repo currently ships generated content for:
 
-> **Note:** `${env:VAR_NAME}` tells VS Code to read the value from your shell environment at runtime. The token never appears in the settings file.
+- GitHub Copilot-oriented exports via `github/`
+- ECA via the `vertex-security` plugin at `eca-plugins/vertex-security/`
 
----
+Other tools may be able to reuse the same content model through `AGENTS.md` and `SKILL.md`-style patterns, but their exact setup should follow the vendor documentation.
+
+## Setup
+
+This repo intentionally avoids embedding large, tool-specific setup guides in the main README.
+
+Use the vendor documentation for runtime setup, then use this repo as a generated content source:
+
+- ECA config and plugin docs:
+  - <https://raw.githubusercontent.com/editor-code-assistant/eca/master/docs/config/introduction.md>
+  - <https://raw.githubusercontent.com/editor-code-assistant/eca/master/docs/config/agents.md>
+  - <https://raw.githubusercontent.com/editor-code-assistant/eca/master/docs/config/skills.md>
+  - <https://raw.githubusercontent.com/editor-code-assistant/eca/master/docs/config/tools.md>
+  - <https://raw.githubusercontent.com/editor-code-assistant/eca/master/docs/config/plugins.md>
+- VS Code / GitHub Copilot customization docs:
+  - <https://code.visualstudio.com/docs/copilot/customization/custom-instructions>
+  - <https://code.visualstudio.com/docs/copilot/customization/custom-chat-modes>
+  - <https://code.visualstudio.com/docs/copilot/customization/agent-skills>
+  - <https://code.visualstudio.com/docs/copilot/customization/mcp-servers>
+
+Repo-specific setup notes for ECA are kept in [`docs/ECA-SETUP.md`](docs/ECA-SETUP.md).
 
 ## Usage
 
-Open Copilot Chat (`Cmd+Shift+I`) → click the agent picker → select **`vertex-security-expert`**
+Once the agent is installed, you can either select the agent and ask in natural language or, in ECA, invoke the plugin's slash commands directly.
 
-| What to type | What it does |
-|---|---|
-| `Walk me through DES-A01 threat modeling` | SSDLC step-by-step guidance |
-| `How do I test an API for BOLA?` | API security skill from OWASP |
-| `Scan this repo for vulnerabilities` | Snyk SAST + SCA scan |
-| `Do a deep security review` | 7-phase manual code review |
-| `Full security review of this PR` | Snyk + deep review combined |
+- **GitHub Copilot:** open Copilot Chat (`Cmd+Shift+I`) → open the agent picker → select **`Vertex Security Agent`**.
+- **ECA natural-language flow:** select the **`vertex-security-agent`** agent and ask normally. It can route work to the bundled skills automatically.
+- **ECA slash-command flow:** run plugin-prefixed commands such as `/vertex-security:scan-repo`. Keep using the agent when you want broader free-form routing beyond the command shortcut itself.
 
----
+| Goal | Natural-language example | ECA slash command |
+|---|---|---|
+| Threat modeling guidance | `Walk me through DES-A01 threat modeling` | `/vertex-security:threat-model DES-A01` |
+| BOLA / IDOR testing | `How do I test an API for BOLA?` | `/vertex-security:bola-test payments-api` |
+| Repo-wide vulnerability scan | `Scan this repo for vulnerabilities` | `/vertex-security:scan-repo` |
+| Deep manual review | `Do a deep security review` | `/vertex-security:deep-review` |
+| Full PR security review | `Full security review of this PR` | `/vertex-security:review-pr https://github.com/owner/repo/pull/123` |
 
-## Requirements
+## Typical workflow
 
-- VS Code with GitHub Copilot (active subscription)
-- Node.js installed (`node --version` to check)
-- Access to `VertexInc/vertex-knowledge-bases` on GitHub
-- Snyk account with an API token
+1. Edit canonical markdown under `src/`.
+2. Run `mise install` if needed.
+3. Run `mise run build`.
+4. Run `mise run check` (this now includes schema validation).
+5. If you need to narrow down a failure, run `mise run check-generated` or `mise run check-schema` directly.
+6. Commit both the canonical sources and regenerated outputs.
 
+## Research and design notes
+
+Short compatibility summaries live in `research/`:
+
+- `research/portable-skills-and-best-practices.md`
+- `research/copilot-compatibility.md`
+- `research/eca-compatibility.md`
+- `research/goose-compatibility.md`
+
+These files are intentionally summary-first and link to upstream documentation instead of duplicating vendor docs inline.

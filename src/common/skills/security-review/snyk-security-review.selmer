@@ -1,0 +1,12 @@
+---
+name: snyk-security-review
+description: Full security review — SAST, SCA, fix validation, and breakability assessment using Snyk MCP
+{% include "src/common/frontmatter/skill-domain.selmer" %}subdomain: security-review
+tags:
+- snyk
+- sast
+- sca
+- dependency-scanning
+- remediation
+{% include "src/common/frontmatter/skill-version.selmer" %}---
+{% include "src/instructions/snyk_security_review.instructions.md" %}

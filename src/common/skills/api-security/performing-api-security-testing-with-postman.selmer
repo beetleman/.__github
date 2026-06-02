@@ -1,0 +1,12 @@
+---
+name: performing-api-security-testing-with-postman
+description: Builds Postman collections for structured OWASP API Top 10 security testing — multi-role environments, automated test scripts, Newman CI/CD integration, and GitHub Actions pipeline configuration.
+{% include "src/common/frontmatter/skill-domain.selmer" %}subdomain: api-security
+tags:
+- api-security
+- postman
+- owasp
+- automated-testing
+- ci-cd
+{% include "src/common/frontmatter/skill-version.selmer" %}---
+{% with base_url="{{base_url}}" other_user_id="{{other_user_id}}" auth_token="{{auth_token}}" other_user_order_id="{{other_user_order_id}}" %}{% include "src/skills/api-security/performing-api-security-testing-with-postman.md" %}{% endwith %}

@@ -1,0 +1,37 @@
+[tools]
+babashka = "1.12.218"
+difftastic = "0.69.0"
+jsonschema = "15.8.0"
+
+# Tasks are defined here and run via babashka (bb) so they work the same on
+# Linux, macOS and Windows. All real logic lives in scripts/*.clj using
+# babashka.fs / babashka.process (no shell-specific commands).
+# List them with: mise tasks
+
+[tasks.build-copilot]
+description = "Generate github/* Copilot export artifacts"
+run = "bb scripts/build.clj copilot"
+
+[tasks.build-eca]
+description = "Generate ECA plugin outputs (FM-transformed from src/)"
+run = "bb scripts/build.clj eca"
+
+[tasks.build]
+description = "Build github/ exports and ECA plugin artifacts"
+depends = ["build-copilot", "build-eca"]
+
+[tasks.check-generated]
+description = "Verify generated files match a fresh build"
+run = "bb scripts/check-generated.clj"
+
+[tasks.check-schema]
+description = "Validate targets.yaml against the schema"
+run = "jsonschema validate schemas/targets.schema.json scripts/targets.yaml"
+
+[tasks.check]
+description = "Run generated-file and schema checks"
+depends = ["check-generated", "check-schema"]
+
+[tasks.clean]
+description = "Remove generated outputs (does NOT touch src/ or snapshots)"
+run = "bb scripts/clean.clj"

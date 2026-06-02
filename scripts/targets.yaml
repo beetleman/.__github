@@ -1,0 +1,152 @@
+# yaml-language-server: $schema=../schemas/targets.schema.json
+# Build target manifest: route per-target source artifacts to harness outputs.
+
+agents:
+  entries:
+    vertex-security-agent:
+      targets:
+        copilot:
+          from: src/copilot/agents/Vertex-security-agent.agent.md
+          to: github/agents/Vertex-security-agent.agent.md
+        eca:
+          from: src/eca/agents/vertex-security-agent.md
+          to: eca-plugins/vertex-security/agents/vertex-security-agent.md
+
+instructions:
+  entries:
+    snyk-rules:
+      targets:
+        copilot:
+          from: src/copilot/instructions/snyk_rules.instructions.md
+          to: github/snyk_rules.instructions.md
+        eca:
+          from: src/eca/rules/snyk-rules.md
+          to: eca-plugins/vertex-security/rules/snyk-rules.md
+
+    snyk-security-review:
+      targets:
+        copilot:
+          from: src/copilot/instructions/snyk_security_review.instructions.md
+          to: github/snyk_security_review.instructions.md
+        eca:
+          from: src/eca/skills/security-review/snyk-security-review.md
+          to: eca-plugins/vertex-security/skills/snyk-security-review/SKILL.md
+
+    deep-code-review:
+      targets:
+        copilot:
+          from: src/copilot/instructions/deep_code_review.instructions.md
+          to: github/deep_code_review.instructions.md
+        eca:
+          from: src/eca/skills/security-review/deep-code-review.md
+          to: eca-plugins/vertex-security/skills/deep-code-review/SKILL.md
+
+commands:
+  entries:
+    bola-test:
+      targets:
+        eca:
+          from: src/eca/commands/bola-test.md
+          to: eca-plugins/vertex-security/commands/bola-test.md
+
+    scan-repo:
+      targets:
+        eca:
+          from: src/eca/commands/scan-repo.md
+          to: eca-plugins/vertex-security/commands/scan-repo.md
+
+    deep-review:
+      targets:
+        eca:
+          from: src/eca/commands/deep-review.md
+          to: eca-plugins/vertex-security/commands/deep-review.md
+
+    review-pr:
+      targets:
+        eca:
+          from: src/eca/commands/review-pr.md
+          to: eca-plugins/vertex-security/commands/review-pr.md
+
+    threat-model:
+      targets:
+        eca:
+          from: src/eca/commands/threat-model.md
+          to: eca-plugins/vertex-security/commands/threat-model.md
+
+skills:
+  entries:
+    conducting-api-security-testing:
+      targets:
+        copilot:
+          from: src/copilot/skills/api-security/conducting-api-security-testing.md
+          to: github/skills/api-security/conducting-api-security-testing.md
+        eca:
+          from: src/eca/skills/api-security/conducting-api-security-testing.md
+          to: eca-plugins/vertex-security/skills/conducting-api-security-testing/SKILL.md
+
+    exploiting-api-injection-vulnerabilities:
+      targets:
+        copilot:
+          from: src/copilot/skills/api-security/exploiting-api-injection-vulnerabilities.md
+          to: github/skills/api-security/exploiting-api-injection-vulnerabilities.md
+        eca:
+          from: src/eca/skills/api-security/exploiting-api-injection-vulnerabilities.md
+          to: eca-plugins/vertex-security/skills/exploiting-api-injection-vulnerabilities/SKILL.md
+
+    implementing-api-security-posture-management:
+      targets:
+        copilot:
+          from: src/copilot/skills/api-security/implementing-api-security-posture-management.md
+          to: github/skills/api-security/implementing-api-security-posture-management.md
+        eca:
+          from: src/eca/skills/api-security/implementing-api-security-posture-management.md
+          to: eca-plugins/vertex-security/skills/implementing-api-security-posture-management/SKILL.md
+
+    performing-api-security-testing-with-postman:
+      targets:
+        copilot:
+          from: src/copilot/skills/api-security/performing-api-security-testing-with-postman.md
+          to: github/skills/api-security/performing-api-security-testing-with-postman.md
+        eca:
+          from: src/eca/skills/api-security/performing-api-security-testing-with-postman.md
+          to: eca-plugins/vertex-security/skills/performing-api-security-testing-with-postman/SKILL.md
+
+    testing-api-authentication-weaknesses:
+      targets:
+        copilot:
+          from: src/copilot/skills/api-security/testing-api-authentication-weaknesses.md
+          to: github/skills/api-security/testing-api-authentication-weaknesses.md
+        eca:
+          from: src/eca/skills/api-security/testing-api-authentication-weaknesses.md
+          to: eca-plugins/vertex-security/skills/testing-api-authentication-weaknesses/SKILL.md
+
+    testing-api-for-broken-object-level-authorization:
+      targets:
+        copilot:
+          from: src/copilot/skills/api-security/testing-api-for-broken-object-level-authorization.md
+          to: github/skills/api-security/testing-api-for-broken-object-level-authorization.md
+        eca:
+          from: src/eca/skills/api-security/testing-api-for-broken-object-level-authorization.md
+          to: eca-plugins/vertex-security/skills/testing-api-for-broken-object-level-authorization/SKILL.md
+
+    testing-api-security-with-owasp-top-10:
+      targets:
+        copilot:
+          from: src/copilot/skills/api-security/testing-api-security-with-owasp-top-10.md
+          to: github/skills/api-security/testing-api-security-with-owasp-top-10.md
+        eca:
+          from: src/eca/skills/api-security/testing-api-security-with-owasp-top-10.md
+          to: eca-plugins/vertex-security/skills/testing-api-security-with-owasp-top-10/SKILL.md
+
+# Knowledge stays under knowledge/ because the agent fetch table resolves these
+# runtime artifacts by that path.
+knowledge:
+  entries:
+    org-ssdlc-expert:
+      targets:
+        copilot:
+          from: src/copilot/knowledge/org-ssdlc-expert.md
+          to: github/org-ssdlc-expert.md
+        eca:
+          from: src/eca/knowledge/org-ssdlc-expert.md
+          to: eca-plugins/vertex-security/knowledge/org-ssdlc-expert.md
